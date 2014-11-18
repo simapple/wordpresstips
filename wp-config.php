@@ -16,20 +16,26 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
+//文件说明 配置文件
+
+//mysql的设置基本上就都在这里
+
+//数据库名
 define('DB_NAME', 'wordpress');
 
 /** MySQL database username */
+//数据库用户名
 define('DB_USER', 'root');
-
+//数据库密码
 /** MySQL database password */
 define('DB_PASSWORD', '123456');
-
+//数据库主机地址
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
-
+//数据库编码
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
-
+//数据库校验 一般情况下不用管
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
@@ -42,6 +48,8 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
+
+//这里是一些相关的key 用于验证和安全设置 默认生成的
 define('AUTH_KEY',         'MdwNxtnEs|+QJdIe$]p(Wc+=yzD:LbM-sU3cqF{}%>Wh4Ve. )Q$a:h2>hoHwvju');
 define('SECURE_AUTH_KEY',  'b$atHQr5y6YmoG=c?gCGe[4smui1w:Elay];g7-n3T!9Gx=SB~{L*n}E8U@zA$>[');
 define('LOGGED_IN_KEY',    '&e@8VSN^*p;P=CZw<7pl[R&V2!+%95(QGS^$t}]s;o|v:<+)XPR2SG>R|{:yYpcI');
@@ -59,6 +67,7 @@ define('NONCE_SALT',       'Z0(_fq2Lt>^FEe_^?o`GR*:;^sPdBI?&I5PU)%RLIcVQWZqst|kV
  * You can have multiple installations in one database if you give each a unique
  * prefix. Only numbers, letters, and underscores please!
  */
+//数据库表前缀
 $table_prefix  = 'wp_';
 
 /**
@@ -68,13 +77,16 @@ $table_prefix  = 'wp_';
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
+//调试模式是否开启，最好配合调试插件使用
 define('WP_DEBUG', false);
 
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
+//定义了wordpress主路径
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
+//引入wordpress的变量文件，这里才是真正的进入wordpress的执行流程
 require_once(ABSPATH . 'wp-settings.php');

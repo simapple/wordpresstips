@@ -15,6 +15,10 @@
  *
  * @return null Will return null if register_globals PHP directive was disabled.
  */
+//wordpress 函数文件
+
+//取消全局注册
+//安全函数
 function wp_unregister_GLOBALS() {
 	if ( !ini_get( 'register_globals' ) )
 		return;
@@ -41,6 +45,8 @@ function wp_unregister_GLOBALS() {
  * @global string $PHP_SELF The filename of the currently executing script,
  *                          relative to the document root.
  */
+//修复服务器变量，主要因为主机环境和php环境的不同
+//弥补iis和apache php-fpm等不同模式下的变量差异
 function wp_fix_server_vars() {
 	global $PHP_SELF;
 
@@ -107,6 +113,7 @@ function wp_fix_server_vars() {
  * @global string $required_php_version The required PHP version string.
  * @global string $wp_version           The WordPress version string.
  */
+//检测 php和mysql的版本
 function wp_check_php_mysql_versions() {
 	global $required_php_version, $wp_version;
 	$php_version = phpversion();
@@ -131,6 +138,7 @@ function wp_check_php_mysql_versions() {
  *
  * @since 3.0.0
  */
+//在请求是favicon时 直接放回
 function wp_favicon_request() {
 	if ( '/favicon.ico' == $_SERVER['REQUEST_URI'] ) {
 		header('Content-Type: image/vnd.microsoft.icon');
