@@ -18,6 +18,8 @@
  * backwards compatibility reasons), and again on the 'init' action. We must avoid
  * registering rewrite rules before the 'init' action.
  */
+//分类api文件
+//初始化分类信息
 function create_initial_taxonomies() {
 	global $wp_rewrite;
 
@@ -141,6 +143,7 @@ add_action( 'init', 'create_initial_taxonomies', 0 ); // highest priority
  *  from the array needs to match; 'and' means all elements must match. The default is 'and'.
  * @return array A list of taxonomy names or objects
  */
+//获取已经注册的分类信息
 function get_taxonomies( $args = array(), $output = 'names', $operator = 'and' ) {
 	global $wp_taxonomies;
 
@@ -166,6 +169,7 @@ function get_taxonomies( $args = array(), $output = 'names', $operator = 'and' )
  * @param string $output The type of output to return, either taxonomy 'names' or 'objects'. 'names' is the default.
  * @return array The names of all taxonomy of $object_type.
  */
+//返回所有的分类信息
 function get_object_taxonomies($object, $output = 'names') {
 	global $wp_taxonomies;
 
@@ -225,6 +229,7 @@ function get_taxonomy( $taxonomy ) {
  * @param string $taxonomy Name of taxonomy object
  * @return bool Whether the taxonomy exists.
  */
+//检测分类是否存在
 function taxonomy_exists( $taxonomy ) {
 	global $wp_taxonomies;
 
@@ -321,6 +326,7 @@ function is_taxonomy_hierarchical($taxonomy) {
  * @param array|string $args See optional args description above.
  * @return null|WP_Error WP_Error if errors, otherwise null.
  */
+//注册一个分类
 function register_taxonomy( $taxonomy, $object_type, $args = array() ) {
 	global $wp_taxonomies, $wp;
 

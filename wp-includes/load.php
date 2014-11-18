@@ -163,6 +163,7 @@ function wp_favicon_request() {
  *
  * @global int $upgrading the unix timestamp marking when upgrading WordPress began.
  */
+//显示维护信息 在升级时会出现
 function wp_maintenance() {
 	if ( !file_exists( ABSPATH . '.maintenance' ) || defined( 'WP_INSTALLING' ) )
 		return;
@@ -214,6 +215,7 @@ function wp_maintenance() {
  *
  * @return bool Always returns true.
  */
+//计时开始 相对有timer_stop()
 function timer_start() {
 	global $timestart;
 	$timestart = microtime( true );
@@ -235,6 +237,7 @@ function timer_start() {
  * @return string The "second.microsecond" finished time calculation. The number is formatted
  *                for human consumption, both localized and rounded.
  */
+//计时结束 计算运行时间 并按i18n格式返回
 function timer_stop( $display = 0, $precision = 3 ) {
 	global $timestart, $timeend;
 	$timeend = microtime( true );
@@ -275,6 +278,7 @@ function timer_stop( $display = 0, $precision = 3 ) {
  * @since 3.0.0
  * @access private
  */
+//打开调试模式
 function wp_debug_mode() {
 	if ( WP_DEBUG ) {
 		error_reporting( E_ALL );
@@ -284,13 +288,14 @@ function wp_debug_mode() {
 		elseif ( null !== WP_DEBUG_DISPLAY )
 			ini_set( 'display_errors', 0 );
 
-		if ( WP_DEBUG_LOG ) {
+		if ( WP_DEBUG_LOG ) {//如果设置了错误日志，则将错误日志输出
 			ini_set( 'log_errors', 1 );
 			ini_set( 'error_log', WP_CONTENT_DIR . '/debug.log' );
 		}
 	} else {
 		error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR );
 	}
+    //如果是RPC访问不显示错误
 	if ( defined( 'XMLRPC_REQUEST' ) )
 		ini_set( 'display_errors', 0 );
 }
@@ -308,6 +313,7 @@ function wp_debug_mode() {
  * @since 3.0.0
  * @access private
  */
+//设置语言目录，如果没有设置则更加默认情况设置语言目录相关文件和变量
 function wp_set_lang_dir() {
 	if ( !defined( 'WP_LANG_DIR' ) ) {
 		if ( file_exists( WP_CONTENT_DIR . '/languages' ) && @is_dir( WP_CONTENT_DIR . '/languages' ) || !@is_dir(ABSPATH . WPINC . '/languages') ) {
@@ -347,6 +353,7 @@ function wp_set_lang_dir() {
  *
  * @global wpdb $wpdb The WordPress database class.
  */
+//加载数据库工具类 并实例化一个数据库对象
 function require_wp_db() {
 	global $wpdb;
 
@@ -372,6 +379,7 @@ function require_wp_db() {
  * @global wpdb   $wpdb         The WordPress database class.
  * @global string $table_prefix The database table prefix.
  */
+//初始化 数据库对象的一些变量 设置表前缀 格式化变量
 function wp_set_wpdb_vars() {
 	global $wpdb, $table_prefix;
 	if ( !empty( $wpdb->error ) )
@@ -423,6 +431,7 @@ function wp_using_ext_object_cache( $using = null ) {
  *
  * @global int $blog_id Blog ID.
  */
+//启动wp的对象缓存
 function wp_start_object_cache() {
 	global $blog_id;
 
@@ -472,6 +481,7 @@ function wp_start_object_cache() {
  * @since 3.0.0
  * @access private
  */
+//如果没有安装则跳转到安装页面
 function wp_not_installed() {
 	if ( is_multisite() ) {
 		if ( ! is_blog_installed() && ! defined( 'WP_INSTALLING' ) ) {
@@ -505,6 +515,7 @@ function wp_not_installed() {
  *
  * @return array Files to include.
  */
+//获取必须开启的插件列表
 function wp_get_mu_plugins() {
 	$mu_plugins = array();
 	if ( !is_dir( WPMU_PLUGIN_DIR ) )
@@ -535,6 +546,7 @@ function wp_get_mu_plugins() {
  *
  * @return array Files.
  */
+//获取开启和有效的插件列表
 function wp_get_active_and_valid_plugins() {
 	$plugins = array();
 	$active_plugins = (array) get_option( 'active_plugins', array() );
@@ -571,6 +583,7 @@ function wp_get_active_and_valid_plugins() {
  * @since 3.0.0
  * @access private
  */
+//获取编码
 function wp_set_internal_encoding() {
 	if ( function_exists( 'mb_internal_encoding' ) ) {
 		$charset = get_option( 'blog_charset' );
@@ -588,6 +601,7 @@ function wp_set_internal_encoding() {
  * @since 3.0.0
  * @access private
  */
+//安全转义一些变量
 function wp_magic_quotes() {
 	// If already slashed, strip.
 	if ( get_magic_quotes_gpc() ) {
@@ -612,6 +626,7 @@ function wp_magic_quotes() {
  * @since 1.2.0
  * @access private
  */
+//在PHP结束执行前执行
 function shutdown_action_hook() {
 	/**
 	 * Fires just before PHP shuts down execution.
@@ -632,6 +647,7 @@ function shutdown_action_hook() {
  * @param object $object The object to clone.
  * @return object The cloned object.
  */
+//复制一个对象
 function wp_clone( $object ) {
 	// Use parens for clone to accommodate PHP 4. See #17880
 	return clone( $object );
@@ -647,6 +663,7 @@ function wp_clone( $object ) {
  *
  * @return bool True if inside WordPress administration interface, false otherwise.
  */
+//检测是不是admin
 function is_admin() {
 	if ( isset( $GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin();
@@ -668,6 +685,7 @@ function is_admin() {
  *
  * @return bool True if inside WordPress blog administration pages.
  */
+//检测是不是blog的admin
 function is_blog_admin() {
 	if ( isset( $GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin( 'site' );
@@ -689,6 +707,7 @@ function is_blog_admin() {
  *
  * @return bool True if inside WordPress network administration pages.
  */
+//检测是不是网络admin
 function is_network_admin() {
 	if ( isset( $GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin( 'network' );
@@ -711,6 +730,7 @@ function is_network_admin() {
  *
  * @return bool True if inside WordPress user administration pages.
  */
+//检测是不是用户
 function is_user_admin() {
 	if ( isset( $GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin( 'user' );
@@ -727,6 +747,7 @@ function is_user_admin() {
  *
  * @return bool True if Multisite is enabled, false otherwise.
  */
+//检测是不是多域名站
 function is_multisite() {
 	if ( defined( 'MULTISITE' ) )
 		return MULTISITE;
@@ -744,6 +765,7 @@ function is_multisite() {
  *
  * @return int Blog id
  */
+//获取blogid
 function get_current_blog_id() {
 	global $blog_id;
 	return absint($blog_id);
@@ -764,9 +786,10 @@ function get_current_blog_id() {
  *
  * @global $wp_locale The WordPress date and time locale object.
  */
+//请求一段更早期的翻译
 function wp_load_translations_early() {
 	global $text_direction, $wp_locale;
-
+    //巧妙的使用了静态变量
 	static $loaded = false;
 	if ( $loaded )
 		return;
@@ -777,7 +800,7 @@ function wp_load_translations_early() {
 
 	// We need $wp_local_package
 	require ABSPATH . WPINC . '/version.php';
-
+    //请求语言包相关的文件
 	// Translation and localization
 	require_once ABSPATH . WPINC . '/pomo/mo.php';
 	require_once ABSPATH . WPINC . '/l10n.php';

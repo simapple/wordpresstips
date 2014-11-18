@@ -8,7 +8,7 @@
  */
 
 require_once dirname(__FILE__) . '/entry.php';
-
+//翻译工具类
 if ( !class_exists( 'Translations' ) ):
 class Translations {
 	var $entries = array();

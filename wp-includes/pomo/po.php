@@ -16,6 +16,7 @@ ini_set('auto_detect_line_endings', 1);
 /**
  * Routines for working with PO files
  */
+//处理po翻译文件的工具类
 if ( !class_exists( 'PO' ) ):
 class PO extends Gettext_Translations {
 

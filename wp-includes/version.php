@@ -4,6 +4,7 @@
  *
  * @global string $wp_version
  */
+//wordpress的一些关键的版本信息 mysql 编辑器
 $wp_version = '4.0';
 
 /**

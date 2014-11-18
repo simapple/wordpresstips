@@ -23,6 +23,7 @@
  * @param bool $secure_cookie Optional. Whether to use secure cookie.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
+//用户api
 function wp_signon( $credentials = array(), $secure_cookie = '' ) {
 	if ( empty($credentials) ) {
 		if ( ! empty($_POST['log']) )
@@ -111,6 +112,7 @@ function wp_signon( $credentials = array(), $secure_cookie = '' ) {
  * @param string                $password Password for authentication.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
+//验证用户
 function wp_authenticate_username_password($user, $username, $password) {
 	if ( is_a( $user, 'WP_User' ) ) {
 		return $user;

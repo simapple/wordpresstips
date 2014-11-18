@@ -22,6 +22,7 @@
  * @param mixed $default Optional. Default value to return if the option does not exist.
  * @return mixed Value set for the option.
  */
+//获取配置项的值
 function get_option( $option, $default = false ) {
 	global $wpdb;
 
@@ -133,6 +134,7 @@ function get_option( $option, $default = false ) {
  *
  * @param string $option Option name.
  */
+//保护某个项的值不被修改
 function wp_protect_special_option( $option ) {
 	if ( 'alloptions' === $option || 'notoptions' === $option )
 		wp_die( sprintf( __( '%s is a protected WP option and may not be modified' ), esc_html( $option ) ) );

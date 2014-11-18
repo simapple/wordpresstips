@@ -18,8 +18,9 @@
  * @subpackage Plugin
  * @since 1.5.0
  */
-
+//插件api 用于调用插件 回调函数和方法 在指定的action或者filter触发相应的调用
 // Initialize the filter globals.
+//初始化了几个全局过滤变量，格式都为数组
 global $wp_filter, $wp_actions, $merged_filters, $wp_current_filter;
 
 if ( ! isset( $wp_filter ) )
@@ -79,6 +80,7 @@ if ( ! isset( $wp_current_filter ) )
  * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
  * @return boolean true
  */
+//添加过滤调用
 function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
 	global $wp_filter, $merged_filters;
 
@@ -175,6 +177,7 @@ function has_filter($tag, $function_to_check = false) {
  * @param mixed  $var   Additional variables passed to the functions hooked to <tt>$tag</tt>.
  * @return mixed The filtered value after all hooked functions are applied to it.
  */
+//向某处添加一个要回调的行为
 function apply_filters( $tag, $value ) {
 	global $wp_filter, $merged_filters, $wp_current_filter;
 
@@ -294,6 +297,7 @@ function apply_filters_ref_array($tag, $args) {
  * @param int      $priority           Optional. The priority of the function. Default 10.
  * @return boolean Whether the function existed before it was removed.
  */
+//移除某处的filter
 function remove_filter( $tag, $function_to_remove, $priority = 10 ) {
 	$function_to_remove = _wp_filter_build_unique_id( $tag, $function_to_remove, $priority );
 
@@ -322,6 +326,7 @@ function remove_filter( $tag, $function_to_remove, $priority = 10 ) {
  * @param int|bool $priority Optional. The priority number to remove. Default false.
  * @return bool True when finished.
  */
+//移除某处的所有filter
 function remove_all_filters( $tag, $priority = false ) {
 	global $wp_filter, $merged_filters;
 
@@ -347,6 +352,7 @@ function remove_all_filters( $tag, $priority = false ) {
  *
  * @return string Hook name of the current filter or action.
  */
+//获取当期filter的名字
 function current_filter() {
 	global $wp_current_filter;
 	return end( $wp_current_filter );
@@ -361,6 +367,7 @@ function current_filter() {
  *
  * @return string Hook name of the current action.
  */
+//获取当前action的名字
 function current_action() {
 	return current_filter();
 }
@@ -386,6 +393,7 @@ function current_action() {
  *                            checks if any filter is currently being run.
  * @return bool Whether the filter is currently in the stack.
  */
+//获取当前在执行的filter的名字
 function doing_filter( $filter = null ) {
 	global $wp_current_filter;
 
@@ -407,6 +415,7 @@ function doing_filter( $filter = null ) {
  *                            if any action is currently being run.
  * @return bool Whether the action is currently in the stack.
  */
+//获取当前正在执行的action的名字
 function doing_action( $action = null ) {
 	return doing_filter( $action );
 }
@@ -433,6 +442,7 @@ function doing_action( $action = null ) {
  * @param int      $accepted_args   Optional. The number of arguments the function accept. Default 1.
  * @return bool Will always return true.
  */
+//执行action 带参数的filter
 function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
 	return add_filter($tag, $function_to_add, $priority, $accepted_args);
 }
@@ -459,6 +469,7 @@ function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) 
  *                    functions hooked to the action. Default empty.
  * @return null Will return null if $tag does not exist in $wp_filter array.
  */
+//执行在这个action处的回调函数
 function do_action($tag, $arg = '') {
 	global $wp_filter, $wp_actions, $merged_filters, $wp_current_filter;
 
@@ -519,6 +530,7 @@ function do_action($tag, $arg = '') {
  * @param string $tag The name of the action hook.
  * @return int The number of times action hook $tag is fired.
  */
+//获取action触发的次数
 function did_action($tag) {
 	global $wp_actions;
 
@@ -542,6 +554,7 @@ function did_action($tag) {
  * @param array  $args The arguments supplied to the functions hooked to <tt>$tag</tt>
  * @return null Will return null if $tag does not exist in $wp_filter array
  */
+//执行某处的回调
 function do_action_ref_array($tag, $args) {
 	global $wp_filter, $wp_actions, $merged_filters, $wp_current_filter;
 
@@ -600,6 +613,7 @@ function do_action_ref_array($tag, $args) {
  *                  that evaluates to false (e.g.) 0, so use the === operator for testing the
  *                  return value.
  */
+//检查在某处是否有回调
 function has_action($tag, $function_to_check = false) {
 	return has_filter($tag, $function_to_check);
 }
@@ -618,6 +632,7 @@ function has_action($tag, $function_to_check = false) {
  * @param int      $priority           Optional. The priority of the function. Default 10.
  * @return boolean Whether the function is removed.
  */
+//移除一处位置的指定回调
 function remove_action( $tag, $function_to_remove, $priority = 10 ) {
 	return remove_filter( $tag, $function_to_remove, $priority );
 }
@@ -631,6 +646,7 @@ function remove_action( $tag, $function_to_remove, $priority = 10 ) {
  * @param int|bool $priority The priority number to remove them from. Default false.
  * @return bool True when finished.
  */
+//移除一处调用的所有回调
 function remove_all_actions($tag, $priority = false) {
 	return remove_all_filters($tag, $priority);
 }
@@ -651,6 +667,7 @@ function remove_all_actions($tag, $priority = false) {
  * @param string $file The filename of plugin.
  * @return string The name of a plugin.
  */
+//获取插件基本名
 function plugin_basename( $file ) {
 	global $wp_plugin_paths;
 
@@ -681,6 +698,7 @@ function plugin_basename( $file ) {
  * @param string $file Known path to the file.
  * @return bool Whether the path was able to be registered.
  */
+//注册插件真是路径
 function wp_register_plugin_realpath( $file ) {
 	global $wp_plugin_paths;
 
@@ -713,6 +731,7 @@ function wp_register_plugin_realpath( $file ) {
  * @param string $file The filename of the plugin (__FILE__).
  * @return string the filesystem path of the directory that contains the plugin.
  */
+//获取插件的地址
 function plugin_dir_path( $file ) {
 	return trailingslashit( dirname( $file ) );
 }
@@ -725,6 +744,7 @@ function plugin_dir_path( $file ) {
  * @param string $file The filename of the plugin (__FILE__).
  * @return string the URL path of the directory that contains the plugin.
  */
+//获取插件目录的url
 function plugin_dir_url( $file ) {
 	return trailingslashit( plugins_url( '', $file ) );
 }
@@ -747,6 +767,7 @@ function plugin_dir_url( $file ) {
  * @param string   $file     The filename of the plugin including the path.
  * @param callback $function The function hooked to the 'activate_PLUGIN' action.
  */
+//注册插件启用函数
 function register_activation_hook($file, $function) {
 	$file = plugin_basename($file);
 	add_action('activate_' . $file, $function);
@@ -770,6 +791,7 @@ function register_activation_hook($file, $function) {
  * @param string   $file     The filename of the plugin including the path.
  * @param callback $function The function hooked to the 'deactivate_PLUGIN' action.
  */
+//注册停用函数
 function register_deactivation_hook($file, $function) {
 	$file = plugin_basename($file);
 	add_action('deactivate_' . $file, $function);
@@ -801,6 +823,7 @@ function register_deactivation_hook($file, $function) {
  * @param callback $callback The callback to run when the hook is called. Must be
  *                           a static method or function.
  */
+//注册插件卸载回调
 function register_uninstall_hook( $file, $callback ) {
 	if ( is_array( $callback ) && is_object( $callback[0] ) ) {
 		_doing_it_wrong( __FUNCTION__, __( 'Only a static class method or function can be used in an uninstall hook.' ), '3.1' );
@@ -836,6 +859,7 @@ function register_uninstall_hook( $file, $callback ) {
  *
  * @param array $args The collected parameters from the hook that was called.
  */
+//wordpress 集中处理所有的回调
 function _wp_call_all_hook($args) {
 	global $wp_filter;
 
@@ -881,6 +905,7 @@ function _wp_call_all_hook($args) {
  *                     and $function is an object reference, and it does not already have
  *                     a unique id.
  */
+//返回一个回调对象的表示 回调对象可能是函数 也可能是对象
 function _wp_filter_build_unique_id($tag, $function, $priority) {
 	global $wp_filter;
 	static $filter_id_count = 0;

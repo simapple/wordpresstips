@@ -14,7 +14,7 @@
  *
  * @package WordPress
  */
-
+//通用全局变量
 global $pagenow,
 	$is_lynx, $is_gecko, $is_winIE, $is_macIE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone, $is_IE,
 	$is_apache, $is_IIS, $is_iis7, $is_nginx;
@@ -49,7 +49,7 @@ unset($self_matches);
 
 // Simple browser detection
 $is_lynx = $is_gecko = $is_winIE = $is_macIE = $is_opera = $is_NS4 = $is_safari = $is_chrome = $is_iphone = false;
-
+//检测访问者是什么浏览器
 if ( isset($_SERVER['HTTP_USER_AGENT']) ) {
 	if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Lynx') !== false ) {
 		$is_lynx = true;
@@ -120,6 +120,7 @@ $is_iis7 = $is_IIS && intval( substr( $_SERVER['SERVER_SOFTWARE'], strpos( $_SER
  *
  * @return bool true|false
  */
+//检测是不是移动设备
 function wp_is_mobile() {
 	static $is_mobile;
 

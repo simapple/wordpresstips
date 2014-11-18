@@ -23,6 +23,9 @@
  *
  * @return string The locale of the blog or from the 'locale' hook.
  */
+
+//这是本地化要使用的api文件
+//获取网站语言
 function get_locale() {
 	global $locale, $wp_local_package;
 
@@ -84,6 +87,7 @@ function get_locale() {
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  * @return string Translated text
  */
+//翻译一段文本
 function translate( $text, $domain = 'default' ) {
 	$translations = get_translations_for_domain( $domain );
 	$translations = $translations->translate( $text );
@@ -157,6 +161,7 @@ function translate_with_gettext_context( $text, $context, $domain = 'default' ) 
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  * @return string Translated text.
  */
+//返回翻译信息
 function __( $text, $domain = 'default' ) {
 	return translate( $text, $domain );
 }

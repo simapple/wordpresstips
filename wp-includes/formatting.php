@@ -27,6 +27,7 @@
  * @param bool $reset Set to true for unit testing. Translated patterns will reset.
  * @return string The string replaced with html entities
  */
+//过滤函数库 用于过滤处理
 function wptexturize($text, $reset = false) {
 	global $wp_cockneyreplace;
 	static $static_characters, $static_replacements, $dynamic_characters, $dynamic_replacements,
@@ -1640,6 +1641,7 @@ function backslashit($string) {
  * @param string $string What to add the trailing slash to.
  * @return string String with trailing slash added.
  */
+//格式化目录
 function trailingslashit( $string ) {
 	return untrailingslashit( $string ) . '/';
 }
@@ -1688,6 +1690,7 @@ function addslashes_gpc($gpc) {
  * @param mixed $value The value to be stripped.
  * @return mixed Stripped value.
  */
+//递归取消转义
 function stripslashes_deep($value) {
 	if ( is_array($value) ) {
 		$value = array_map('stripslashes_deep', $value);
@@ -3909,6 +3912,7 @@ function sanitize_trackback_urls( $to_ping ) {
  * @param string|array $value String or array of strings to slash.
  * @return string|array Slashed $value
  */
+//添加转义
 function wp_slash( $value ) {
 	if ( is_array( $value ) ) {
 		foreach ( $value as $k => $v ) {
@@ -3936,6 +3940,7 @@ function wp_slash( $value ) {
  * @param string|array $value String or array of strings to unslash.
  * @return string|array Unslashed $value
  */
+//取消转义
 function wp_unslash( $value ) {
 	return stripslashes_deep( $value );
 }

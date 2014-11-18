@@ -4,7 +4,7 @@
  *
  * @package WordPress
  */
-
+//wordpress 常量设置文件
 /**
  * Defines initial WordPress constants
  *
@@ -12,6 +12,7 @@
  *
  * @since 3.0.0
  */
+//初始化一下基础的常量
 function wp_initial_constants() {
 	global $blog_id;
 
@@ -96,6 +97,7 @@ function wp_initial_constants() {
  *
  * @since 3.0.0
  */
+//初始化目录常量
 function wp_plugin_directory_constants() {
 	if ( !defined('WP_CONTENT_URL') )
 		define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content'); // full url - WP_CONTENT_DIR is defined further up
@@ -317,6 +319,7 @@ function wp_templating_constants() {
 	 * Will be used as the fallback if the current theme doesn't exist.
 	 * @since 3.0.0
 	 */
+    //默认主题在这里被指定
 	if ( !defined('WP_DEFAULT_THEME') )
 		define( 'WP_DEFAULT_THEME', 'twentyfourteen' );
 

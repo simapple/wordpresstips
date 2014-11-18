@@ -9,7 +9,7 @@
  *
  * @package WordPress
  */
-
+//设置wordpress启动的基本变量和信息
 /**
  * Stores the location of the WordPress directory of functions, classes, and core content.
  *
@@ -33,7 +33,7 @@ require( ABSPATH . WPINC . '/version.php' );
 wp_initial_constants();
 
 // Check for the required PHP version and for the MySQL extension or a database drop-in.
-wp_check_php_mysql_versions();
+wp_check_php_mysql_versions();//检测php mysql版本
 
 // Disable magic quotes at runtime. Magic quotes are added using wpdb later in wp-settings.php.
 @ini_set( 'magic_quotes_runtime', 0 );
@@ -43,24 +43,31 @@ wp_check_php_mysql_versions();
 date_default_timezone_set( 'UTC' );
 
 // Turn register_globals off.
+//关闭默认全局变量
 wp_unregister_GLOBALS();
 
 // Standardize $_SERVER variables across setups.
+//修复不同服务环境的服务器变量
 wp_fix_server_vars();
 
 // Check if we have received a request due to missing favicon.ico
+//检测是否icon请求
 wp_favicon_request();
 
 // Check if we're in maintenance mode.
+//检测是否维护状态
 wp_maintenance();
 
 // Start loading timer.
+//开始计时器
 timer_start();
 
 // Check if we're in WP_DEBUG mode.
+//检测是否debug模式开启是的话就初始化debug模式
 wp_debug_mode();
 
 // For an advanced caching plugin to use. Uses a static drop-in because you would only want one.
+//检测是佛看其缓存
 if ( WP_CACHE )
 	WP_DEBUG ? include( WP_CONTENT_DIR . '/advanced-cache.php' ) : @include( WP_CONTENT_DIR . '/advanced-cache.php' );
 
@@ -68,6 +75,7 @@ if ( WP_CACHE )
 wp_set_lang_dir();
 
 // Load early WordPress files.
+//加载一些必须加载的wordpress文件
 require( ABSPATH . WPINC . '/compat.php' );
 require( ABSPATH . WPINC . '/functions.php' );
 require( ABSPATH . WPINC . '/class-wp.php' );
@@ -76,26 +84,31 @@ require( ABSPATH . WPINC . '/plugin.php' );
 require( ABSPATH . WPINC . '/pomo/mo.php' );
 
 // Include the wpdb class and, if present, a db.php database drop-in.
+//初始化数据库操作实例
 require_wp_db();
 
 // Set the database table prefix and the format specifiers for database table columns.
 $GLOBALS['table_prefix'] = $table_prefix;
+//初始化数据库实例的一些设置
 wp_set_wpdb_vars();
 
 // Start the WordPress object cache, or an external object cache if the drop-in is present.
+//开启对象缓存
 wp_start_object_cache();
 
 // Attach the default filters.
+//设置默认的回调位置
 require( ABSPATH . WPINC . '/default-filters.php' );
 
 // Initialize multisite if enabled.
+//如果是多站就启用这一部分
 if ( is_multisite() ) {
 	require( ABSPATH . WPINC . '/ms-blogs.php' );
 	require( ABSPATH . WPINC . '/ms-settings.php' );
 } elseif ( ! defined( 'MULTISITE' ) ) {
 	define( 'MULTISITE', false );
 }
-
+//注册执行结束时的回调
 register_shutdown_function( 'shutdown_action_hook' );
 
 // Stop most of WordPress from being loaded if we just want the basics.
@@ -103,12 +116,15 @@ if ( SHORTINIT )
 	return false;
 
 // Load the L10n library.
+//加载本地化api
 require_once( ABSPATH . WPINC . '/l10n.php' );
 
 // Run the installer if WordPress is not installed.
+//检测wordpress 是否已安装
 wp_not_installed();
 
 // Load most of WordPress.
+//加载更多的wordpress库
 require( ABSPATH . WPINC . '/class-wp-walker.php' );
 require( ABSPATH . WPINC . '/class-wp-ajax-response.php' );
 require( ABSPATH . WPINC . '/formatting.php' );
@@ -163,6 +179,7 @@ if ( is_multisite() ) {
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.
+//初始化插件常量
 wp_plugin_directory_constants();
 
 $GLOBALS['wp_plugin_paths'] = array();
@@ -193,12 +210,15 @@ if ( is_multisite() )
 	ms_cookie_constants(  );
 
 // Define constants after multisite is loaded. Cookie-related constants may be overridden in ms_network_cookies().
+//初始化cookie常量
 wp_cookie_constants();
 
 // Define and enforce our SSL constants
+//初始化ssl常量
 wp_ssl_constants();
 
 // Create common globals.
+//创建通用的全局变量
 require( ABSPATH . WPINC . '/vars.php' );
 
 // Make taxonomies and posts available to plugins and themes.
@@ -210,6 +230,7 @@ create_initial_post_types();
 register_theme_directory( get_theme_root() );
 
 // Load active plugins.
+//加载所有启用的插件
 foreach ( wp_get_active_and_valid_plugins() as $plugin ) {
 	wp_register_plugin_realpath( $plugin );
 	include_once( $plugin );
@@ -276,6 +297,7 @@ $GLOBALS['wp_rewrite'] = new WP_Rewrite();
  * @global object $wp
  * @since 2.0.0
  */
+//生成wp实例
 $GLOBALS['wp'] = new WP();
 
 /**

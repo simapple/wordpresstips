@@ -11,6 +11,7 @@ if ( !class_exists( 'Translation_Entry' ) ):
 /**
  * Translation_Entry class encapsulates a translatable string
  */
+    //解析一个要翻译的字符串
 class Translation_Entry {
 
 	/**

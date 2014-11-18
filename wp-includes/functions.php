@@ -165,6 +165,7 @@ function date_i18n( $dateformatstring, $unixtimestamp = false, $gmt = false ) {
  * @param int $decimals Optional. Precision of the number of decimal places. Default 0.
  * @return string Converted number in string format.
  */
+//根据系统指定的格式化方式 格式返回
 function number_format_i18n( $number, $decimals = 0 ) {
 	global $wp_locale;
 	$formatted = number_format( $number, absint( $decimals ), $wp_locale->number_format['decimal_point'], $wp_locale->number_format['thousands_sep'] );
@@ -868,6 +869,7 @@ function wp_remote_fopen( $uri ) {
  *
  * @param string $query_vars Default WP_Query arguments.
  */
+//执行wordpress工作流
 function wp( $query_vars = '' ) {
 	global $wp, $wp_query, $wp_the_query;
 	$wp->main( $query_vars );
@@ -1257,6 +1259,7 @@ function do_robots() {
  *
  * @return bool Whether the blog is already installed.
  */
+//检测是否已经安装
 function is_blog_installed() {
 	global $wpdb;
 
@@ -1387,6 +1390,7 @@ function wp_nonce_field( $action = -1, $name = "_wpnonce", $referer = true , $ec
  * @param bool $echo Optional. Whether to echo or return the referer field. Default true.
  * @return string Referer field HTML markup.
  */
+//为from显示referer
 function wp_referer_field( $echo = true ) {
 	$referer_field = '<input type="hidden" name="_wp_http_referer" value="'. esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '" />';
 
@@ -1428,6 +1432,7 @@ function wp_original_referer_field( $echo = true, $jump_back_to = 'current' ) {
  *
  * @return string|bool False on failure. Referer URL on success.
  */
+//获取referer
 function wp_get_referer() {
 	if ( ! function_exists( 'wp_validate_redirect' ) )
 		return false;
@@ -3153,6 +3158,7 @@ function dead_db() {
  * @param mixed $maybeint Data you wish to have converted to a non-negative integer.
  * @return int A non-negative integer.
  */
+//获取int
 function absint( $maybeint ) {
 	return abs( intval( $maybeint ) );
 }
@@ -3230,6 +3236,7 @@ function _deprecated_function( $function, $version, $replacement = null ) {
  *                            Default null.
  * @param string $message     Optional. A message regarding the change. Default empty.
  */
+//调用一个不推荐的文件
 function _deprecated_file( $file, $version, $replacement = null, $message = '' ) {
 
 	/**

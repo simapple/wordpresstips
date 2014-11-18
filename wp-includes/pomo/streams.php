@@ -7,7 +7,7 @@
  * @package pomo
  * @subpackage streams
  */
-
+//准确处理字节流的工具类
 if ( !class_exists( 'POMO_Reader' ) ):
 class POMO_Reader {
 

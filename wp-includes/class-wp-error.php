@@ -18,6 +18,7 @@
  * @package WordPress
  * @since 2.1.0
  */
+//wordpress 错误处理对象
 class WP_Error {
 	/**
 	 * Stores the list of errors.

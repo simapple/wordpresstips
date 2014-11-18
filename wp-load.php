@@ -40,12 +40,13 @@ if ( file_exists( ABSPATH . 'wp-config.php') ) {//如果有配置文件
 	// A config file doesn't exist
     //如果没有找到配置文件
 	define( 'WPINC', 'wp-includes' );
-    加载include中的load.php
+   // 加载include中的load.php
 	require_once( ABSPATH . WPINC . '/load.php' );
 
 	// Standardize $_SERVER variables across setups.
+    //修复一些服务器变量
 	wp_fix_server_vars();
-
+    //加载默认主函数文件
 	require_once( ABSPATH . WPINC . '/functions.php' );
 
 	$path = wp_guess_url() . '/wp-admin/setup-config.php';
@@ -62,11 +63,13 @@ if ( file_exists( ABSPATH . 'wp-config.php') ) {//如果有配置文件
 
 	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 	require_once( ABSPATH . WPINC . '/version.php' );
-
+    //检测php和mysql
 	wp_check_php_mysql_versions();
+    //加载必要的翻译文件
 	wp_load_translations_early();
 
 	// Die with an error message
+    //没有配置文件 直接返回错误信息
 	$die  = __( "There doesn't seem to be a <code>wp-config.php</code> file. I need this before we can get started." ) . '</p>';
 	$die .= '<p>' . __( "Need more help? <a href='http://codex.wordpress.org/Editing_wp-config.php'>We got it</a>." ) . '</p>';
 	$die .= '<p>' . __( "You can create a <code>wp-config.php</code> file through a web interface, but this doesn't work for all server setups. The safest way is to manually create the file." ) . '</p>';

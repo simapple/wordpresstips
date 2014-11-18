@@ -9,7 +9,7 @@
 
 require_once dirname(__FILE__) . '/translations.php';
 require_once dirname(__FILE__) . '/streams.php';
-
+//处理mo翻译文件的工具类
 if ( !class_exists( 'MO' ) ):
 class MO extends Gettext_Translations {
 
